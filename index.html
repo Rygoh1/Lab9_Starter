@@ -87,6 +87,7 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
@@ -102,6 +103,127 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+    errorBtns[0].addEventListener('click', () => {
+      console.log('Console Log Demo');
+    });
+
+    errorBtns[1].addEventListener('click', () => {
+      console.error('Console Error Demo');
+    });
+
+    let count = 0;
+    errorBtns[2].addEventListener('click', () => {
+      count++;
+      console.log('Count Button: ' + count);
+    });
+
+    errorBtns[3].addEventListener('click', () => {
+      count++;
+      console.warn('Console Warning Demo');
+    });
+
+    errorBtns[4].addEventListener('click', () => {
+      let number = 2;
+      let errorMsg = "The number does not equal 3";
+      console.assert(number == 3, "%o", { number, errorMsg } );
+    });
+
+    errorBtns[5].addEventListener('click', () => {
+      count = 0
+      console.clear("Console was cleared");
+    });
+
+    errorBtns[6].addEventListener('click', () => {
+      console.dir(errorBtns[6]);
+    });
+
+    errorBtns[7].addEventListener('click', () => {
+      console.dirxml(errorBtns[7]);
+    });
+
+    errorBtns[8].addEventListener('click', () => {
+      console.group();
+    });
+
+    errorBtns[9].addEventListener('click', () => {
+      console.groupEnd();
+    });
+
+    errorBtns[10].addEventListener('click', () => {
+      console.table(["Ryan", "Goh", "CSE110"]);
+    });
+
+    errorBtns[11].addEventListener('click', () => {
+      console.time("Timer");
+    });
+
+    errorBtns[12].addEventListener('click', () => {
+      console.timeEnd("Timer");
+    });
+
+    errorBtns[13].addEventListener('click', () => {
+      console.trace(errorBtns);
+    });
+
+    errorBtns[14].addEventListener('click', () => {
+      console.log('Here is a global error')
+      console.log(error);
+    });
+
+    let calculate = document.getElementById('calculate');
+    let output = document.querySelector('output');
+
+    class NumberTooLargeError extends Error {
+      constructor(message) {
+      super(message); 
+      this.name = "NumberTooLargeError"; 
+    }
+}
+    calculate.addEventListener('click', () => {
+      try{
+        let firstNum = parseFloat(document.querySelector('#first-num').value);
+        let secondNum = parseFloat(document.querySelector('#second-num').value);
+        let operator = document.querySelector('#operator').value;
+        let result;
+
+        switch (operator) {
+          case '+':
+            result = firstNum + secondNum;
+            break;
+          case '-':
+            result = firstNum - secondNum;
+            break;
+          case '*':
+            result = firstNum * secondNum;
+            break;
+         case '/':
+            result = firstNum / secondNum;
+            break;
+          default:
+            result = 'Invalid operator';
+            break;
+         }
+        if(result === Infinity){
+          throw new NumberTooLargeError("Too big of a number");
+        }
+        output.innerHTML = result;
+      }
+      catch (err){
+        console.log("Error found")
+        if (!(err instanceof SyntaxError)) {
+          console.log("Not a syntax error");
+          throw err; 
+        }
+      }
+      finally{
+        console.log("Try catch complete")
+      }
+    });
+
+    window.TrackJS && TrackJS.install({ 
+    token: "be1ba873da034430b09554057094e271"
+    // for more configuration options, see https://docs.trackjs.com
+    });
   </script>
 </body>
 
